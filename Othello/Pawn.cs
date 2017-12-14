@@ -12,14 +12,22 @@ namespace Othello {
     class Pawn {
         private int x;
         private int y;
-        private Color color;
-        public Pawn(int x, int y, Color c) {
-            this.x = x; 
-            this.y = y;
+        public Color color { get; set; }
+        public bool placed;
+
+        public Pawn()
+        {
+            this.placed = false;
+            this.color = Color.WHITE;
+        }
+
+        public Pawn(Color c) {
             this.color = c;
+            this.placed = false;
         }
         public void reverse() {
             this.color = this.color == Color.BLACK ? Color.WHITE : Color.BLACK;
         }
+        
     }
 }
