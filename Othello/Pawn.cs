@@ -10,8 +10,6 @@ namespace Othello {
         BLACK = 1
     }
     class Pawn {
-        private int x;
-        private int y;
         public Color color { get; set; }
         public bool placed;
 
@@ -28,6 +26,5 @@ namespace Othello {
         public void reverse() {
             this.color = this.color == Color.BLACK ? Color.WHITE : Color.BLACK;
         }
-        
     }
 }
