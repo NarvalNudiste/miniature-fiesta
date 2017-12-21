@@ -13,6 +13,12 @@ namespace Othello
         int currentPlayer;
         int boardSize = 8;
         private String name = "literralyunplayable";
+
+        public int this[int x,int y]
+        {
+            get { return board[x,y]; }
+        }
+
         public Game()
         {
             Initialize();

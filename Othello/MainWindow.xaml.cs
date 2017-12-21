@@ -18,10 +18,25 @@ namespace Othello {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        Image imageBlack;
+        String srcBlack;
+        Image imageWhite;
+        String srcWhite;
+        Image ImageNull;
+        Game game;
+
+
         public MainWindow() {
             InitializeComponent();
+            game = new Game();
+            imageBlack = new Image();
+            ImageNull = new Image();
+            imageWhite = new Image();
+            srcBlack = @"C:\Users\cedric.pahud\Pictures\testB.png";
+            srcWhite = @"C:\Users\cedric.pahud\Pictures\testW.png";
+            imageBlack.Source = new BitmapImage(new Uri(srcBlack));
+            imageWhite.Source = new BitmapImage(new Uri(srcWhite));
             InitializeGrid();
-            Game b = new Game();
         }
 
         public void InitializeGrid()
@@ -42,6 +57,20 @@ namespace Othello {
                     bord.BorderThickness = new Thickness(2.0);
                     bord.BorderBrush = Brushes.Black;
                     btn.Click += grid_Item_Click;
+                    btn.MouseEnter += grid_Item_Enter_Over;
+                    btn.MouseLeave += grid_Item_Left_Over;
+                    if(game[j,i] == 0)
+                    {
+                        Image img = new Image();
+                        img.Source = new BitmapImage(new Uri(srcWhite));
+                        btn.Content = img;
+                    }
+                    else if(game[j, i] == 1)
+                    {
+                        Image img = new Image();
+                        img.Source = new BitmapImage(new Uri(srcBlack));
+                        btn.Content = img;
+                    }
                     PlayGrid.Children.Add(bord);
                     PlayGrid.Children.Add(btn);
                 }
@@ -54,6 +83,26 @@ namespace Othello {
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
             MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
+        }
+
+        private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int x = (int)btn.GetValue(Grid.RowProperty);
+            int y = (int)btn.GetValue(Grid.ColumnProperty);
+            //changer en fonction du player et si coup possible
+            if(game[x,y]==-1)
+                btn.Content = imageBlack;
+        }
+
+        private void grid_Item_Left_Over(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            int x = (int)btn.GetValue(Grid.RowProperty);
+            int y = (int)btn.GetValue(Grid.ColumnProperty);
+            //changer en fonction du player et si coup possible
+            if (game[x, y] == -1)
+                btn.Content = ImageNull;
         }
     }
 }
