@@ -82,7 +82,23 @@ namespace Othello {
             Button btn = sender as Button;
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
-            MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
+            if(game.IsPlayable(x,y,game.currentPlayer==0))
+            {
+                game.PlayMove(x, y, game.currentPlayer == 0);
+                Image img = new Image();
+                if(game.currentPlayer==0)
+                {
+                    img.Source = new BitmapImage(new Uri(srcBlack));
+                    btn.Content = img;
+                }
+                else
+                {
+                    img.Source = new BitmapImage(new Uri(srcWhite));
+                    btn.Content = img;
+                }
+                //change player here
+            }
+            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
         }
 
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
@@ -91,9 +107,11 @@ namespace Othello {
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
             //changer en fonction du player et si coup possible
-            if(game[x,y]==-1)
+            if(game.IsPlayable(x,y,game.currentPlayer==0))
+                btn.Content = imageWhite;
+            else if (game.IsPlayable(x, y, game.currentPlayer == 1))
                 btn.Content = imageBlack;
-        }
+        }       
 
         private void grid_Item_Left_Over(object sender, RoutedEventArgs e)
         {

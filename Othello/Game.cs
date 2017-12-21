@@ -10,7 +10,7 @@ namespace Othello
     class Game : IPlayable.IPlayable
     {
         int[,] board;
-        int currentPlayer;
+        public int currentPlayer;
         int boardSize = 8;
         private String name = "literralyunplayable";
 
