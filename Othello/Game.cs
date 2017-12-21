@@ -12,6 +12,7 @@ namespace Othello
         int[,] board;
         int currentPlayer;
         int boardSize = 8;
+
         private String name = "literralyunplayable";
         public Game()
         {
@@ -35,6 +36,9 @@ namespace Othello
         private bool Out(int x, int y) {
             return (x < 0 || y < 0 || x > boardSize || y > boardSize) ? true : false;
         }
+        private bool Empty(int x, int y) {
+            return (board[x, y] == -1) ? true : false;
+        }
         private int GetScore(int player) {
             int s = 0;
             foreach (int e in board) {
@@ -43,6 +47,42 @@ namespace Othello
             }
             return s;
         }
+
+        private bool CheckLine(int x, int y, int direction, int color) {
+            switch (direction) {
+                case 1: {
+                        return CheckLine(x, y, -1, 1, color);
+                        break;
+                    }
+                case 2: {
+                        return CheckLine(x, y, -1, 0, color);
+                        break;
+                    }
+                case 3: {
+                        return CheckLine(x, y, 1, 1, color);
+                    }
+                    //todo le reste
+                    return true;
+            }
+        }
+        private bool CheckLine(int x, int y, int xInc, int yInc, int color) {
+            int foeColor = color == 0 ? 1 : 0;
+            bool firstPass = false;
+            while (!Out(x, y)) {
+                if (board[x,y] == -1)
+                    return false;
+                else if (board[x,y] == foeColor) {
+                    firstPass = true;
+                }
+                if (firstPass == true && board[x,y] == color) {
+                    return true;
+                }
+                x += xInc;
+                y += yInc;
+            }
+            return false;
+        }
+
         public int GetBlackScore() {
             return GetScore(1);
         }
@@ -55,9 +95,13 @@ namespace Othello
         }
 
         public bool IsPlayable(int column, int line, bool isWhite) {
-            throw new NotImplementedException();
-        }
+            if (Out(column, line) || !Empty(column, line))
+                return false;
+            else {
 
+            }
+        }
+        
         public bool PlayMove(int column, int line, bool isWhite) {
             throw new NotImplementedException();
         }
