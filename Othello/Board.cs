@@ -8,19 +8,29 @@ namespace Othello
 {
     class Board
     {
-        Pawn[,] boardState;
+        Pawn[,] board;
         int scoreWhite;
         int scoreBlack;
         Color currentPlayer;
 
         public Board()
         {
-            boardState = new Pawn[8, 8];
+            init();
+            Console.WriteLine("init");
+        }
+
+        private void init() {
+            board = new Pawn[8, 8];
             scoreWhite = 2;
             scoreBlack = 2;
             currentPlayer = Color.BLACK;
-            boardState[3,3].placed = true;
-
+            init();
+            for (int y = 3; y < 5; y++) {
+                for (int x = 3; x < 5; x++) {
+                    board[x,y].placed = true;
+                    board[x,y].color = x == y ? Color.WHITE : Color.BLACK;
+                }
+            }
         }
 
         public bool isLegal(int x,int y)
