@@ -122,8 +122,10 @@ namespace Othello {
             int y = (int)btn.GetValue(Grid.ColumnProperty);
             if(game.IsPlayable(x,y, game.isCurrentPlayerWhite()))
             {
-                game.PlayMove(x, y, game.isCurrentPlayerWhite());
-                refreshGrid();
+                if (game.PlayMove(x, y, game.isCurrentPlayerWhite()))
+                {
+                    refreshGrid();
+                }
                 game.changePlayer();
             }
             //MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
