@@ -20,7 +20,7 @@ namespace Othello {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            Board b = new Board();
+            Game b = new Game();
         }
     }
 }
