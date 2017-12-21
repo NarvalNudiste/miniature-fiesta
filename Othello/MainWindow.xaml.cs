@@ -21,6 +21,7 @@ namespace Othello {
         public MainWindow() {
             InitializeComponent();
             InitializeGrid();
+            Game b = new Game()
         }
 
         public void InitializeGrid()
