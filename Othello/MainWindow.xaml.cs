@@ -39,7 +39,7 @@ namespace Othello {
             InitializeGrid();
         }
 
-        public void InitializeGrid()
+        private void InitializeGrid()
         {
             int nbRow = PlayGrid.RowDefinitions.Count();
             int nbColumn = PlayGrid.ColumnDefinitions.Count();
@@ -77,6 +77,43 @@ namespace Othello {
             }
         }
 
+        Button GetGridButton(Grid g, int r, int c)
+        {
+            for (int i = 0; i < g.Children.Count; i++)
+            {
+                UIElement e = g.Children[i];
+                if (Grid.GetRow(e) == r && Grid.GetColumn(e) == c && e is Button)
+                    return e as Button;
+            }
+            return null;
+        }
+
+        private void refreshGrid()
+        {
+            int nbRow = PlayGrid.RowDefinitions.Count();
+            int nbColumn = PlayGrid.ColumnDefinitions.Count();
+
+            for (int i = 0; i < nbRow; i++)
+            {
+                for (int j = 0; j < nbColumn; j++)
+                {
+                    Button btn = GetGridButton(PlayGrid, i, j);
+                    if (game[j, i] == 0)
+                    {
+                        Image img = new Image();
+                        img.Source = new BitmapImage(new Uri(srcWhite));
+                        btn.Content = img;
+                    }
+                    else if (game[j, i] == 1)
+                    {
+                        Image img = new Image();
+                        img.Source = new BitmapImage(new Uri(srcBlack));
+                        btn.Content = img;
+                    }
+                }
+            }
+        }
+
         private void grid_Item_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -85,17 +122,7 @@ namespace Othello {
             if(game.IsPlayable(x,y, game.isCurrentPlayerWhite()))
             {
                 game.PlayMove(x, y, game.isCurrentPlayerWhite());
-                Image img = new Image();
-                if(game.currentPlayer==0)
-                {
-                    img.Source = new BitmapImage(new Uri(srcBlack));
-                    btn.Content = img;
-                }
-                else
-                {
-                    img.Source = new BitmapImage(new Uri(srcWhite));
-                    btn.Content = img;
-                }
+                refreshGrid();
                 game.changePlayer();
             }
             //MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
