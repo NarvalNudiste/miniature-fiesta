@@ -77,6 +77,7 @@ namespace Othello {
             }
         }
 
+        //https://social.msdn.microsoft.com/Forums/vstudio/en-US/dc9afbe7-784d-42cd-8065-6fd1558e8bd9/grid-child-elements-accessing-using-c-rowcolumn?forum=wpf
         Button GetGridButton(Grid g, int r, int c)
         {
             for (int i = 0; i < g.Children.Count; i++)
