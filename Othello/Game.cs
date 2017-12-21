@@ -49,6 +49,15 @@ namespace Othello
             }
             return s;
         }
+        public bool isCurrentPlayerWhite()
+        {
+            return currentPlayer == 0;
+        }
+
+        public void changePlayer()
+        {
+            currentPlayer = currentPlayer == 1 ? 0 : 1;
+        }
         public int GetBlackScore() {
             return GetScore(1);
         }
