@@ -165,5 +165,17 @@ namespace Othello
         public int[,] GetBoard() {
             return board;
         }
+        public void PrintBoard() {
+            for (int y = 0; y < boardSize; y++) {
+                for (int x = 0; x < boardSize; x++) {
+                    if (board[x,y] == -1) {
+                        Debug.Write("x ");
+                    } else {
+                        Debug.Write(board[x, y] + " ");
+                    }
+                }
+                Debug.Write("\n");
+            }
+        }
     }
 }

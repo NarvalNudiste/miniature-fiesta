@@ -131,6 +131,7 @@ namespace Othello {
                     refreshGrid();
                 }
                 game.changePlayer();
+                game.PrintBoard();
             }
             //MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
         }
