@@ -130,8 +130,8 @@ namespace Othello {
         private void grid_Item_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            int x = (int)btn.GetValue(Grid.RowProperty);
-            int y = (int)btn.GetValue(Grid.ColumnProperty);
+            int y = (int)btn.GetValue(Grid.RowProperty);
+            int x = (int)btn.GetValue(Grid.ColumnProperty);
             if(game.IsPlayable(x,y, game.isCurrentPlayerWhite()))
             {
                 if (game.PlayMove(x, y, game.isCurrentPlayerWhite()))
@@ -147,8 +147,8 @@ namespace Othello {
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            int x = (int)btn.GetValue(Grid.RowProperty);
-            int y = (int)btn.GetValue(Grid.ColumnProperty);
+            int y = (int)btn.GetValue(Grid.RowProperty);
+            int x = (int)btn.GetValue(Grid.ColumnProperty);
             if (game.IsPlayable(x, y, game.isCurrentPlayerWhite()))
             {
                 if(game.isCurrentPlayerWhite())
@@ -165,8 +165,8 @@ namespace Othello {
         private void grid_Item_Left_Over(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            int x = (int)btn.GetValue(Grid.RowProperty);
-            int y = (int)btn.GetValue(Grid.ColumnProperty);
+            int y = (int)btn.GetValue(Grid.RowProperty);
+            int x = (int)btn.GetValue(Grid.ColumnProperty);
             if (game[x, y] == -1)
             {
                 btn.Content = ImageNull;
