@@ -89,10 +89,14 @@ namespace Othello
                 if (board[x,y] == -1)
                     return false;
                 else if (board[x,y] == foeColor) {
-                    ary.Add(new Tuple<int, int>(x, y));
+                    Debug.Write("found foe");
+                    if (stockCurrentLocations) {
+                        ary.Add(new Tuple<int, int>(x, y));
+                    }
                     firstPass = true;
                 }
                 if (firstPass == true && board[x,y] == color) {
+                    Debug.Write("where is da wae ?");
                     return true;
                 }
                 x += xInc;
