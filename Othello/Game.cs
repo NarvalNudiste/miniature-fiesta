@@ -38,7 +38,7 @@ namespace Othello
             currentPlayer = 1;
         }
         private bool Out(int x, int y) {
-            return (x < 0 || y < 0 || x > boardSize || y > boardSize) ? true : false;
+            return (x < 0 || y < 0 || x >= boardSize || y >= boardSize) ? true : false;
         }
         private bool Empty(int x, int y) {
             return (board[x, y] == -1) ? true : false;
@@ -52,30 +52,31 @@ namespace Othello
             return s;
         }
         private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
+            Console.WriteLine("Checking direction " + direction);
             switch (direction) {
                 case 1: {
-                        return CheckLine(x, y, -1, 1, color, false);
+                        return CheckLine(x-1, y+1, -1, 1, color, stockCurrentLocation, ary);
                     }
                 case 2: {
-                        return CheckLine(x, y, -1, 0, color, false);
+                        return CheckLine(x, y+1, 0, 1, color, stockCurrentLocation, ary);
                     }
                 case 3: {
-                        return CheckLine(x, y, 1, 1, color, false);
+                        return CheckLine(x+1, y+1, 1, 1, color, stockCurrentLocation, ary);
                     }
                 case 4: {
-                        return CheckLine(x, y, -1, 0, color, false);
+                        return CheckLine(x-1, y, -1, 0, color, stockCurrentLocation, ary);
                     }
                 case 6: {
-                        return CheckLine(x, y, 1, 0, color, false);
+                        return CheckLine(x+1, y, 1, 0, color, stockCurrentLocation, ary);
                     }
                 case 7: {
-                        return CheckLine(x, y, -1, -1, color, false);
+                        return CheckLine(x-1, y-1, -1, -1, color, stockCurrentLocation, ary);
                     }
                 case 8: {
-                        return CheckLine(x, y, 0, -1, color, false);
+                        return CheckLine(x, y-1, 0, -1, color, stockCurrentLocation, ary);
                     }
                 case 9: {
-                        return CheckLine(x, y, 1, 1, color, false);
+                        return CheckLine(x+1, y-1, 1, -1, color, stockCurrentLocation, ary);
                     }
                 default: {
                         return false;
@@ -83,20 +84,21 @@ namespace Othello
             }
         }
         private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
+            //TOFIX
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
-                if (board[x,y] == -1)
+                if (board[x,y] == -1 && firstPass == false)
                     return false;
-                else if (board[x,y] == foeColor) {
-                    Debug.Write("found foe");
+                if (board[x,y] == foeColor) {
+                    Debug.WriteLine("CC at " + x + ";" + y);
                     if (stockCurrentLocations) {
+                        Debug.WriteLine("Appending values in array");
                         ary.Add(new Tuple<int, int>(x, y));
                     }
                     firstPass = true;
                 }
                 if (firstPass == true && board[x,y] == color) {
-                    Debug.Write("where is da wae ?");
                     return true;
                 }
                 x += xInc;
@@ -145,11 +147,15 @@ namespace Othello
                 }
             }
             if (ary.Count == 0) {
+                Debug.WriteLine("Null");
                 return false;
             } else {
                 foreach (Tuple<int, int> t in ary) {
+                    Debug.WriteLine("Switching board color at " + t.Item1 + ";" + t.Item2);
                     board[t.Item1, t.Item2] = board[t.Item1, t.Item2] == 1 ? 0 : 1;
+                    board[column, line] = c;
                 }
+                ary = null;
                 return true;
             }
         }
