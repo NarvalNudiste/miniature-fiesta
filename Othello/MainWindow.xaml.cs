@@ -136,7 +136,6 @@ namespace Othello {
             Button btn = sender as Button;
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
-            //changer en fonction du player et si coup possible
             if(game.IsPlayable(x,y, game.isCurrentPlayerWhite()))
                 btn.Content = imageWhite;
             else if (game.IsPlayable(x, y, game.isCurrentPlayerWhite()))
@@ -148,7 +147,6 @@ namespace Othello {
             Button btn = sender as Button;
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
-            //changer en fonction du player et si coup possible
             if (game[x, y] == -1)
                 btn.Content = ImageNull;
         }
