@@ -10,13 +10,20 @@ namespace Othello
     class Game : IPlayable.IPlayable
     {
         int[,] board;
-        int currentPlayer;
+        public int currentPlayer;
         int boardSize = 8;
 
         private String name = "literralyunplayable";
+
+        public int this[int x,int y]
+        {
+            get { return board[x,y]; }
+        }
+
         public Game()
         {
             Initialize();
+
         }
 
         private void Initialize() {
@@ -48,30 +55,45 @@ namespace Othello
             return s;
         }
 
-        private bool CheckLine(int x, int y, int direction, int color) {
+        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation) {
             switch (direction) {
                 case 1: {
-                        return CheckLine(x, y, -1, 1, color);
-                        break;
+                        return CheckLine(x, y, -1, 1, color, false);
                     }
                 case 2: {
-                        return CheckLine(x, y, -1, 0, color);
-                        break;
+                        return CheckLine(x, y, -1, 0, color, false);
                     }
                 case 3: {
-                        return CheckLine(x, y, 1, 1, color);
+                        return CheckLine(x, y, 1, 1, color, false);
                     }
-                    //todo le reste
-                    return true;
+                case 4: {
+                        return CheckLine(x, y, -1, 0, color, false);
+                    }
+                case 6: {
+                        return CheckLine(x, y, 1, 0, color, false);
+                    }
+                case 7: {
+                        return CheckLine(x, y, -1, -1, color, false);
+                    }
+                case 8: {
+                        return CheckLine(x, y, 0, -1, color, false);
+                    }
+                case 9: {
+                        return CheckLine(x, y, 1, 1, color, false);
+                    }
+                default: {
+                        return false;
+                    }
             }
         }
-        private bool CheckLine(int x, int y, int xInc, int yInc, int color) {
+        private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations) {
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
                 if (board[x,y] == -1)
                     return false;
                 else if (board[x,y] == foeColor) {
+
                     firstPass = true;
                 }
                 if (firstPass == true && board[x,y] == color) {
@@ -82,7 +104,14 @@ namespace Othello
             }
             return false;
         }
-
+        public bool isCurrentPlayerWhite()
+        {
+            return currentPlayer == 0;
+        }
+        public void changePlayer()
+        {
+            currentPlayer = currentPlayer == 1 ? 0 : 1;
+        }
         public int GetBlackScore() {
             return GetScore(1);
         }
@@ -98,7 +127,15 @@ namespace Othello
             if (Out(column, line) || !Empty(column, line))
                 return false;
             else {
-
+                int c = isWhite ? 0 : 1;
+                for (int i = 0; i < 9; i++) {
+                    if (i != 5) {
+                        if (CheckLine(column, line, i, c, false)){
+                            return true;
+                        }
+                    }
+                }
+                return false;
             }
         }
         
