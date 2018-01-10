@@ -88,12 +88,13 @@ namespace Othello
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
-                if (board[x,y] == -1 && firstPass == false)
+                if (board[x,y] == -1)
                     return false;
+                if (board[x,y] == color && firstPass == false) {
+                    return false;
+                }
                 if (board[x,y] == foeColor) {
-                    Debug.WriteLine("CC at " + x + ";" + y);
                     if (stockCurrentLocations) {
-                        Debug.WriteLine("Appending values in array");
                         ary.Add(new Tuple<int, int>(x, y));
                     }
                     firstPass = true;
@@ -128,7 +129,7 @@ namespace Othello
                 return false;
             else {
                 int c = isWhite ? 0 : 1;
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 10; i++) {
                     if (i != 5) {
                         if (CheckLine(column, line, i, c, false)){
                             return true;
@@ -141,9 +142,11 @@ namespace Othello
         public bool PlayMove(int column, int line, bool isWhite) {
             ArrayList ary = new ArrayList();
             int c = isWhite ? 0 : 1;
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < 10; i++) {
                 if (i != 5) {
-                    CheckLine(column, line, i, c, true, ary);
+                    if (CheckLine(column, line, i, c, false)) {
+                        CheckLine(column, line, i, c, true, ary);
+                    }
                 }
             }
             if (ary.Count == 0) {
