@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -29,13 +31,15 @@ namespace Othello {
         public MainWindow() {
             InitializeComponent();
             game = new Game();
+
             imageBlack = new Image();
             ImageNull = new Image();
             imageWhite = new Image();
-            srcBlack = @"C:\Users\cedric.pahud\Pictures\testB.png";
-            srcWhite = @"C:\Users\cedric.pahud\Pictures\testW.png";
+            srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"testB.png";
+            srcWhite = System.AppDomain.CurrentDomain.BaseDirectory + @"testW.png";
             imageBlack.Source = new BitmapImage(new Uri(srcBlack));
             imageWhite.Source = new BitmapImage(new Uri(srcWhite));
+
             InitializeGrid();
         }
 
@@ -136,10 +140,17 @@ namespace Othello {
             Button btn = sender as Button;
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
-            if(game.IsPlayable(x,y, game.isCurrentPlayerWhite()))
-                btn.Content = imageWhite;
-            else if (game.IsPlayable(x, y, game.isCurrentPlayerWhite()))
-                btn.Content = imageBlack;
+            if (game.IsPlayable(x, y, game.isCurrentPlayerWhite()))
+            {
+                if(game.isCurrentPlayerWhite())
+                {
+                    btn.Content = imageWhite;
+                }
+                else
+                {
+                    btn.Content = imageBlack;
+                }
+            }
         }       
 
         private void grid_Item_Left_Over(object sender, RoutedEventArgs e)
