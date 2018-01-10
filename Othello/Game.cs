@@ -52,7 +52,6 @@ namespace Othello
             return s;
         }
         private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
-            Console.WriteLine("Checking direction " + direction);
             switch (direction) {
                 case 1: {
                         return CheckLine(x-1, y+1, -1, 1, color, stockCurrentLocation, ary);
@@ -150,11 +149,9 @@ namespace Othello
                 }
             }
             if (ary.Count == 0) {
-                Debug.WriteLine("Null");
                 return false;
             } else {
                 foreach (Tuple<int, int> t in ary) {
-                    Debug.WriteLine("Switching board color at " + t.Item1 + ";" + t.Item2);
                     board[t.Item1, t.Item2] = board[t.Item1, t.Item2] == 1 ? 0 : 1;
                     board[column, line] = c;
                 }
@@ -168,17 +165,36 @@ namespace Othello
         public int[,] GetBoard() {
             return board;
         }
-        public void PrintBoard() {
+        public bool isAnOptionAvailable(int color) {
+            for (int y = 0; y < boardSize; y++) {
+                for (int x = 0; x < boardSize; x++) {
+                    for (int i = 0; i < 10; i++) {
+                        if (i != 5) {
+                            if (CheckLine(x, y, i, color, false)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        public bool isGameFinished() {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
                     if (board[x,y] == -1) {
-                        Debug.Write("x ");
-                    } else {
-                        Debug.Write(board[x, y] + " ");
+                        return false;
                     }
                 }
-                Debug.Write("\n");
             }
+            return true;
+        }
+        public int getCurrentPlayer() {
+            return currentPlayer;
+        }
+
+        public void ResetGame() {
+            Initialize();
         }
     }
 }

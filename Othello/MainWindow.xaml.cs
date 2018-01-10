@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 //just in case on est groupe 12 LOL
 
@@ -138,8 +139,23 @@ namespace Othello {
                 {
                     refreshGrid();
                 }
-                game.changePlayer();
-                game.PrintBoard();
+
+                if (game.isGameFinished()) {
+                    Debug.WriteLine("Game Finished");
+                    game.ResetGame();
+                    refreshGrid();
+                } else {
+                    if (!game.isAnOptionAvailable(game.getCurrentPlayer() == 0 ? 1 : 0)) {
+                        Debug.WriteLine("No option available, skipping " + game.getCurrentPlayer() + " turn");
+                    }
+                    else if (!game.isAnOptionAvailable(0) && !game.isAnOptionAvailable(1)) {
+                        Debug.WriteLine("Deadlock, resetting the game");
+                        game.ResetGame();
+                    } else {
+                        game.changePlayer();
+                        refreshGrid();
+                    }
+                }
             }
         }
 
