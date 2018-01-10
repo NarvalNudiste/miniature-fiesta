@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//just in case on est groupe 12 LOL
+
 namespace Othello {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -33,6 +35,7 @@ namespace Othello {
             game = new Game();
 
             imageBlack = new Image();
+            // remplacer directe par null ?
             ImageNull = new Image();
             imageWhite = new Image();
             srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"testB.png";
@@ -115,6 +118,11 @@ namespace Othello {
                         img.Source = new BitmapImage(new Uri(srcBlack));
                         btn.Content = img;
                     }
+                    else if(game[j,i] == -1)
+                    {
+                        //pas sur que ce soit utile
+                        btn.Content = null;
+                    }
                 }
             }
         }
@@ -133,7 +141,7 @@ namespace Othello {
                 game.changePlayer();
                 game.PrintBoard();
             }
-            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString());
+            MessageBox.Show("row" + x.ToString() + "column" + y.ToString() +" "+game[x,y]);
         }
 
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
@@ -160,7 +168,9 @@ namespace Othello {
             int x = (int)btn.GetValue(Grid.RowProperty);
             int y = (int)btn.GetValue(Grid.ColumnProperty);
             if (game[x, y] == -1)
+            {
                 btn.Content = ImageNull;
+            }
         }
     }
 }
