@@ -4,28 +4,25 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace Othello
 {
     class Game : IPlayable.IPlayable
     {
         int[,] board;
-        public int currentPlayer;
+        private int currentPlayer;
         int boardSize = 8;
-
-        private String name = "literralyunplayable";
-
+        private String name = "literallyunplayable";
         public int this[int x,int y]
         {
             get { return board[x,y]; }
         }
-
         public Game()
         {
             Initialize();
 
         }
-
         private void Initialize() {
             //init 2d array
                 board = new int[boardSize,boardSize];
@@ -54,8 +51,7 @@ namespace Othello
             }
             return s;
         }
-
-        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation) {
+        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
             switch (direction) {
                 case 1: {
                         return CheckLine(x, y, -1, 1, color, false);
@@ -86,14 +82,14 @@ namespace Othello
                     }
             }
         }
-        private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations) {
+        private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
                 if (board[x,y] == -1)
                     return false;
                 else if (board[x,y] == foeColor) {
-
+                    ary.Add(new Tuple<int, int>(x, y));
                     firstPass = true;
                 }
                 if (firstPass == true && board[x,y] == color) {
@@ -118,11 +114,9 @@ namespace Othello
         public int GetWhiteScore() {
             return GetScore(0);
         }
-
         public string GetName() {
             return name;
         }
-
         public bool IsPlayable(int column, int line, bool isWhite) {
             if (Out(column, line) || !Empty(column, line))
                 return false;
@@ -138,15 +132,26 @@ namespace Othello
                 return false;
             }
         }
-        
         public bool PlayMove(int column, int line, bool isWhite) {
-            throw new NotImplementedException();
+            ArrayList ary = new ArrayList();
+            int c = isWhite ? 0 : 1;
+            for (int i = 0; i < 9; i++) {
+                if (i != 5) {
+                    CheckLine(column, line, i, c, true, ary);
+                }
+            }
+            if (ary.Count == 0) {
+                return false;
+            } else {
+                foreach (Tuple<int, int> t in ary) {
+                    board[t.Item1, t.Item2] = board[t.Item1, t.Item2] == 1 ? 0 : 1;
+                }
+                return true;
+            }
         }
-
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn) {
             throw new NotImplementedException();
         }
-
         public int[,] GetBoard() {
             return board;
         }
