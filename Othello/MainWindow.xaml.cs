@@ -34,6 +34,7 @@ namespace Othello {
         public MainWindow() {
             InitializeComponent();
             game = new Game();
+            DataContext = game;
 
             imageBlack = new Image();
             // remplacer directe par null ?

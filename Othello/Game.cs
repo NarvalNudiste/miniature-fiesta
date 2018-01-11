@@ -22,12 +22,12 @@ namespace Othello
         Stopwatch timerBlack;
 
         public String timerWhiteVal {
-            get { return timerWhite.Elapsed.ToString("hh:mm:ss"); }
+            get { return string.Format("{0:00}:{1:00}:{2:00}", timerWhite.Elapsed.Hours, timerWhite.Elapsed.Minutes, timerWhite.Elapsed.Seconds); }
         }
 
         public String timerBlackVal
         {
-            get { return timerBlack.Elapsed.ToString("hh:mm:ss"); }
+            get { return string.Format("{0:00}:{1:00}:{2:00}", timerBlack.Elapsed.Hours, timerBlack.Elapsed.Minutes, timerBlack.Elapsed.Seconds); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

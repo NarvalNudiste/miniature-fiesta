@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="700">
+        Title="MainWindow" Height="500" Width="900">
     <Grid Name="Structure">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -15,7 +15,8 @@
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="PlayGrid" Margin="10,10,10,10" Grid.Column="1">
+        <!--binding à changer car la si on diminue seulement la largeur de la fen ça pue-->
+        <Grid x:Name="PlayGrid" Margin="10,10,10,10" Grid.Column="1" Width="{Binding ActualHeight, ElementName=PlayGrid, Mode=OneWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -37,7 +38,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
         </Grid>
-        <Label x:Name="TimerBlack" Content="{Binding Path=timerBlackVal}"  Grid.Column="2" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="TimerWhite" Content="{Binding Path=timerWhiteVal}"  Grid.Column="0" HorizontalAlignment="Left" Margin="30,50,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="TimerBlack" Content="{Binding Path=timerBlackVal}"  Grid.Column="2" HorizontalAlignment="Center" Margin="9.8,50,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
+        <Label x:Name="TimerWhite" Content="{Binding Path=timerWhiteVal}"  Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
+        <Label Content="Timer White :" HorizontalAlignment="Center" Grid.Column="0" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
+        <Label Content="Timer Black :" HorizontalAlignment="Center" Grid.Column="2" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
     </Grid>
 </Window>
