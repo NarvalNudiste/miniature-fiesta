@@ -5,24 +5,61 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Collections;
+using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace Othello
 {
-    class Game : IPlayable.IPlayable
+    class Game : IPlayable.IPlayable , System.ComponentModel.INotifyPropertyChanged
     {
         int[,] board;
         private int currentPlayer;
         int boardSize = 8;
         private String name = "literallyunplayable";
+
+        DispatcherTimer globTimer;
+
+        Stopwatch timerWhite;
+        Stopwatch timerBlack;
+
+        public String timerWhiteVal {
+            get { return timerWhite.Elapsed.ToString("hh:mm:ss"); }
+        }
+
+        public String timerBlackVal
+        {
+            get { return timerBlack.Elapsed.ToString("hh:mm:ss"); }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int this[int x,int y]
         {
             get { return board[x,y]; }
         }
         public Game()
         {
-            Initialize();
+            globTimer = new DispatcherTimer();
+            timerWhite = new Stopwatch();
+            timerBlack = new Stopwatch();
 
+            globTimer.Interval = TimeSpan.FromSeconds(1);
+            globTimer.Tick += GlobTimerTick;
+            globTimer.Start();
+            Initialize();
         }
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void GlobTimerTick(object sender, EventArgs e)
+        {
+            OnPropertyChanged("timerWhiteVal");
+            OnPropertyChanged("timerBlackVal");
+        }
+
         private void Initialize() {
             //init 2d array
                 board = new int[boardSize,boardSize];
@@ -36,6 +73,7 @@ namespace Othello
                 }
             }
             currentPlayer = 1;
+            timerBlack.Start();
         }
         private bool Out(int x, int y) {
             return (x < 0 || y < 0 || x >= boardSize || y >= boardSize) ? true : false;
@@ -113,6 +151,16 @@ namespace Othello
         public void changePlayer()
         {
             currentPlayer = currentPlayer == 1 ? 0 : 1;
+            if(currentPlayer ==1)
+            {
+                timerWhite.Stop();
+                timerBlack.Start();
+            }
+            else if(currentPlayer ==0)
+            {
+                timerBlack.Stop();
+                timerWhite.Start();
+            }
         }
         public int GetBlackScore() {
             return GetScore(1);

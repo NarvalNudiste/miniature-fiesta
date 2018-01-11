@@ -141,7 +141,7 @@ namespace Othello {
                 game.changePlayer();
                 game.PrintBoard();
             }
-            MessageBox.Show("row" + x.ToString() + "column" + y.ToString() +" "+game[x,y]);
+            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString() +" "+game[x,y]);
         }
 
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
