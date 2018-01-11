@@ -15,8 +15,6 @@ namespace Othello
         int[,] board;
         private int currentPlayer;
         int boardSize = 8;
-<<<<<<< HEAD
-        private String name = "literallyunplayable";
 
         DispatcherTimer globTimer;
 
@@ -34,9 +32,8 @@ namespace Othello
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-=======
         private String name = "Dan";
->>>>>>> 021128fc44113cd7762dd09f7ea61b0e8e8a1eac
+
         public int this[int x,int y]
         {
             get { return board[x,y]; }
