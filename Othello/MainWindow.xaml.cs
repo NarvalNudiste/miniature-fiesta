@@ -139,18 +139,19 @@ namespace Othello {
                 {
                     refreshGrid();
                 }
-
+                //game.Evaluate();
                 if (game.isGameFinished()) {
                     Debug.WriteLine("Game Finished");
                     game.ResetGame();
                     refreshGrid();
                 } else {
-                    if (!game.isAnOptionAvailable(game.getCurrentPlayer() == 0 ? 1 : 0)) {
-                        Debug.WriteLine("No option available, skipping " + game.getCurrentPlayer() + " turn");
-                    }
-                    else if (!game.isAnOptionAvailable(0) && !game.isAnOptionAvailable(1)) {
+                    if (!game.isAnOptionAvailable(0) && !game.isAnOptionAvailable(1)) {
                         Debug.WriteLine("Deadlock, resetting the game");
                         game.ResetGame();
+                        refreshGrid();
+                    } else if (!game.isAnOptionAvailable(game.getCurrentPlayer() == 0 ? 1 : 0)) {
+                        String playerSkipped = game.getCurrentPlayer() == 0 ? "black" : "white";
+                        Debug.WriteLine("No option available, skipping " + playerSkipped + " turn");
                     } else {
                         game.changePlayer();
                         refreshGrid();

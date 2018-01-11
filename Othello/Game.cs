@@ -13,7 +13,7 @@ namespace Othello
         int[,] board;
         private int currentPlayer;
         int boardSize = 8;
-        private String name = "literallyunplayable";
+        private String name = "Dan";
         public int this[int x,int y]
         {
             get { return board[x,y]; }
@@ -83,7 +83,6 @@ namespace Othello
             }
         }
         private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
-            //TOFIX
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
@@ -169,7 +168,13 @@ namespace Othello
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
                     for (int i = 0; i < 10; i++) {
-                        if (i != 5) {
+                        if (i != 5 && board[x,y] == -1) {
+                            if (color == 0) {
+                              // Debug.WriteLine("WHITE : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
+                            }
+                            if (color == 1){
+                            //  Debug.WriteLine("BLACK : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
+                            }
                             if (CheckLine(x, y, i, color, false)) {
                                 return true;
                             }
@@ -195,6 +200,13 @@ namespace Othello
 
         public void ResetGame() {
             Initialize();
+        }
+
+        public void Evaluate() {
+            String cplayer = this.getCurrentPlayer() == 0 ? "White" : "Black";
+            Debug.WriteLine("Current player : " + cplayer);
+            Debug.WriteLine("Can white play ? " + this.isAnOptionAvailable(0));
+            Debug.WriteLine("Can black play ? " + this.isAnOptionAvailable(1));
         }
     }
 }
