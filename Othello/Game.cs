@@ -15,6 +15,7 @@ namespace Othello
         int[,] board;
         private int currentPlayer;
         int boardSize = 8;
+<<<<<<< HEAD
         private String name = "literallyunplayable";
 
         DispatcherTimer globTimer;
@@ -33,6 +34,9 @@ namespace Othello
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+=======
+        private String name = "Dan";
+>>>>>>> 021128fc44113cd7762dd09f7ea61b0e8e8a1eac
         public int this[int x,int y]
         {
             get { return board[x,y]; }
@@ -90,7 +94,6 @@ namespace Othello
             return s;
         }
         private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
-            Console.WriteLine("Checking direction " + direction);
             switch (direction) {
                 case 1: {
                         return CheckLine(x-1, y+1, -1, 1, color, stockCurrentLocation, ary);
@@ -122,16 +125,16 @@ namespace Othello
             }
         }
         private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
-            //TOFIX
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
-                if (board[x,y] == -1 && firstPass == false)
+                if (board[x,y] == -1)
                     return false;
+                if (board[x,y] == color && firstPass == false) {
+                    return false;
+                }
                 if (board[x,y] == foeColor) {
-                    Debug.WriteLine("CC at " + x + ";" + y);
                     if (stockCurrentLocations) {
-                        Debug.WriteLine("Appending values in array");
                         ary.Add(new Tuple<int, int>(x, y));
                     }
                     firstPass = true;
@@ -176,7 +179,7 @@ namespace Othello
                 return false;
             else {
                 int c = isWhite ? 0 : 1;
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < 10; i++) {
                     if (i != 5) {
                         if (CheckLine(column, line, i, c, false)){
                             return true;
@@ -189,17 +192,17 @@ namespace Othello
         public bool PlayMove(int column, int line, bool isWhite) {
             ArrayList ary = new ArrayList();
             int c = isWhite ? 0 : 1;
-            for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < 10; i++) {
                 if (i != 5) {
-                    CheckLine(column, line, i, c, true, ary);
+                    if (CheckLine(column, line, i, c, false)) {
+                        CheckLine(column, line, i, c, true, ary);
+                    }
                 }
             }
             if (ary.Count == 0) {
-                Debug.WriteLine("Null");
                 return false;
             } else {
                 foreach (Tuple<int, int> t in ary) {
-                    Debug.WriteLine("Switching board color at " + t.Item1 + ";" + t.Item2);
                     board[t.Item1, t.Item2] = board[t.Item1, t.Item2] == 1 ? 0 : 1;
                     board[column, line] = c;
                 }
@@ -213,17 +216,49 @@ namespace Othello
         public int[,] GetBoard() {
             return board;
         }
-        public void PrintBoard() {
+        public bool isAnOptionAvailable(int color) {
+            for (int y = 0; y < boardSize; y++) {
+                for (int x = 0; x < boardSize; x++) {
+                    for (int i = 0; i < 10; i++) {
+                        if (i != 5 && board[x,y] == -1) {
+                            if (color == 0) {
+                              // Debug.WriteLine("WHITE : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
+                            }
+                            if (color == 1){
+                            //  Debug.WriteLine("BLACK : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
+                            }
+                            if (CheckLine(x, y, i, color, false)) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+        public bool isGameFinished() {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
                     if (board[x,y] == -1) {
-                        Debug.Write("x ");
-                    } else {
-                        Debug.Write(board[x, y] + " ");
+                        return false;
                     }
                 }
-                Debug.Write("\n");
             }
+            return true;
+        }
+        public int getCurrentPlayer() {
+            return currentPlayer;
+        }
+
+        public void ResetGame() {
+            Initialize();
+        }
+
+        public void Evaluate() {
+            String cplayer = this.getCurrentPlayer() == 0 ? "White" : "Black";
+            Debug.WriteLine("Current player : " + cplayer);
+            Debug.WriteLine("Can white play ? " + this.isAnOptionAvailable(0));
+            Debug.WriteLine("Can black play ? " + this.isAnOptionAvailable(1));
         }
     }
 }

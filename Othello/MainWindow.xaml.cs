@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 //just in case on est groupe 12 LOL
 
@@ -138,10 +139,25 @@ namespace Othello {
                 {
                     refreshGrid();
                 }
-                game.changePlayer();
-                game.PrintBoard();
+                //game.Evaluate();
+                if (game.isGameFinished()) {
+                    Debug.WriteLine("Game Finished");
+                    game.ResetGame();
+                    refreshGrid();
+                } else {
+                    if (!game.isAnOptionAvailable(0) && !game.isAnOptionAvailable(1)) {
+                        Debug.WriteLine("Deadlock, resetting the game");
+                        game.ResetGame();
+                        refreshGrid();
+                    } else if (!game.isAnOptionAvailable(game.getCurrentPlayer() == 0 ? 1 : 0)) {
+                        String playerSkipped = game.getCurrentPlayer() == 0 ? "black" : "white";
+                        Debug.WriteLine("No option available, skipping " + playerSkipped + " turn");
+                    } else {
+                        game.changePlayer();
+                        refreshGrid();
+                    }
+                }
             }
-            //MessageBox.Show("row" + x.ToString() + "column" + y.ToString() +" "+game[x,y]);
         }
 
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
