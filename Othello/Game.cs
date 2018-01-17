@@ -96,34 +96,34 @@ namespace Othello
             }
             return s;
         }
-        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null, int[,] game = null) {
+        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null, int[,] game = null, ArrayList ops) {
             if (game == null) {
                 game = this.board;
             }
             switch (direction) {
                 case 1: {
-                        return CheckLine(x, y, x - 1, y + 1, -1, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y + 1, -1, 1, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 2: {
-                        return CheckLine(x, y, x, y + 1, 0, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x, y + 1, 0, 1, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 3: {
-                        return CheckLine(x, y, x + 1, y + 1, 1, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y + 1, 1, 1, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 4: {
-                        return CheckLine(x, y, x - 1, y, -1, 0, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y, -1, 0, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 6: {
-                        return CheckLine(x, y, x + 1, y, 1, 0, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y, 1, 0, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 7: {
-                        return CheckLine(x, y, x - 1, y - 1, -1, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y - 1, -1, -1, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 8: {
-                        return CheckLine(x, y, x, y - 1, 0, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x, y - 1, 0, -1, color, stockCurrentLocation, ary, game, ops);
                     }
                 case 9: {
-                        return CheckLine(x, y, x + 1, y - 1, 1, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y - 1, 1, -1, color, stockCurrentLocation, ary, game, ops);
                     }
                 default: {
                         return false;
@@ -131,7 +131,7 @@ namespace Othello
             }
         }
 
-        private bool CheckLine(int startingX, int startingY, int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null, int[,] game = null) {
+        private bool CheckLine(int startingX, int startingY, int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null, int[,] game = null, ArrayList ops = null) {
             if (game == null) {
                 game = this.board;
             }
@@ -147,6 +147,12 @@ namespace Othello
                     if (stockCurrentLocations) {
                         ary.Add(new Tuple<int, int>(x, y));
                     }
+                    if (ops != null){
+                        int[,] newEntry = new int[startingX, startingY];
+                        if (!ops.Contains(newEntry)) {
+                            ops.Add(new int[startingX, startingY]);
+                        }
+                    }
                     firstPass = true;
                 }
                 if (firstPass == true && game[x,y] == color) {
@@ -157,18 +163,21 @@ namespace Othello
             }
             return false;
         }
-        private ArrayList getPlayableMoves() {
+
+        private ArrayList Ops(int[,] game) {
+            ArrayList ops = new ArrayList();
             for (int y = 0; y < this.boardSize; y++) {
                 for (int x = 0; x< this.boardSize; x++) {
                     for (int i = 0; i < 10; i++) {
                         if (i != 5) {
-                            CheckLine(x, y, i, this.currentPlayer, false);
+                            CheckLine(x, y, i, this.currentPlayer, false, null, game, ops);
                         }
                     }
                 }
             }
-            return possibleMoves;
+            return ops;
         }
+
         public bool isCurrentPlayerWhite()
         {
             return currentPlayer == 0;
@@ -203,7 +212,7 @@ namespace Othello
                 int c = isWhite ? 0 : 1;
                 for (int i = 0; i < 10; i++) {
                     if (i != 5) {
-                        if (CheckLine(column, line, i, c, false)){
+                        if (CheckLine(column, line, i, c, false, null, null, null)){
                             return true;
                         }
                     }
@@ -216,8 +225,8 @@ namespace Othello
             int c = isWhite ? 0 : 1;
             for (int i = 0; i < 10; i++) {
                 if (i != 5) {
-                    if (CheckLine(column, line, i, c, false)) {
-                        CheckLine(column, line, i, c, true, ary);
+                    if (CheckLine(column, line, i, c, false, null, null, null)) {
+                        CheckLine(column, line, i, c, true, ary, null, null);
                     }
                 }
             }
@@ -239,8 +248,8 @@ namespace Othello
             int c = isWhite ? 0 : 1;
             for (int i = 0; i < 10; i++) {
                 if (i != 5) {
-                    if (CheckLine(column, line, i, c, false, null, newBoard)) {
-                        CheckLine(column, line, i, c, true, ary, newBoard);
+                    if (CheckLine(column, line, i, c, false, null, newBoard, null)) {
+                        CheckLine(column, line, i, c, true, ary, newBoard, null);
                     }
                 }
             }
@@ -304,7 +313,7 @@ namespace Othello
                             if (color == 1){
                             //  Debug.WriteLine("BLACK : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
                             }
-                            if (CheckLine(x, y, i, color, false)) {
+                            if (CheckLine(x, y, i, color, false, null, null, null)) {
                                 return true;
                             }
                         }
@@ -322,7 +331,7 @@ namespace Othello
                     for (int x = 0; x < boardSize; x++) {
                         for (int i = 0; i < 10; i++) {
                             if (i != 5 && game[x, y] == -1) {
-                                if (CheckLine(x, y, i, color, false, null, game)) {
+                                if (CheckLine(x, y, i, color, false, null, game, null)) {
                                     return false;
                                 }
                             }
