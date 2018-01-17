@@ -274,11 +274,11 @@ namespace Othello
                 return new Tuple<int,int,int>(Score(root), -1, -1);
             }
             //je crois pour test
-            int optVal = parentValue;
+            int optVal = int.MinValue;
             int[] optOp = null;
             foreach (int[] op in Ops(root))
             {
-                int[,] newNode = Apply(root, op,player==0);
+                int[,] newNode = Apply(op[0],op[1],player==0,root);
                 int val = alphabeta(newNode, depth - 1, -minOrMax, optVal,player==0?1:0).Item1;
                 if (val*minOrMax>parentValue*minOrMax)
                 {
