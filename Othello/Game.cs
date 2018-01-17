@@ -225,7 +225,7 @@ namespace Othello
                 return new Tuple<int,int,int>(Score(root), -1, -1);
             }
             //je crois pour test
-            int optVal = parentValue;
+            int optVal = int.MinValue;
             int[] optOp = null;
             foreach (int[] op in Ops(root))
             {
