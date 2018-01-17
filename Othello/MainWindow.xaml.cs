@@ -27,7 +27,6 @@ namespace Othello {
         String srcBlack;
         Image imageWhite;
         String srcWhite;
-        Image ImageNull;
         Game game;
 
 
@@ -37,8 +36,6 @@ namespace Othello {
             DataContext = game;
 
             imageBlack = new Image();
-            // remplacer directe par null ?
-            ImageNull = new Image();
             imageWhite = new Image();
             srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"testB.png";
             srcWhite = System.AppDomain.CurrentDomain.BaseDirectory + @"testW.png";
@@ -186,7 +183,7 @@ namespace Othello {
             int x = (int)btn.GetValue(Grid.ColumnProperty);
             if (game[x, y] == -1)
             {
-                btn.Content = ImageNull;
+                btn.Content = null;
             }
         }
     }

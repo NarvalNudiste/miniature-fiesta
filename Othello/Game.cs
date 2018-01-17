@@ -73,6 +73,8 @@ namespace Othello
                         board[x,y] = -1;
                 }
             }
+            timerBlack.Reset();
+            timerWhite.Reset();
             currentPlayer = 1;
             timerBlack.Start();
         }
@@ -207,9 +209,46 @@ namespace Othello
                 return true;
             }
         }
+
+
+
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn) {
-            throw new NotImplementedException();
+            Tuple<int, int, int> move = alphabeta(board, 5, 1, Score(board),whiteTurn?0:1);
+            return new Tuple<int, int>(move.Item2, move.Item3);
         }
+
+        public Tuple<int,int,int> alphabeta(int[,] root,int depth, int minOrMax, int parentValue, int player)
+        {
+            if (depth == 0 || final(player,root))
+            {
+                //retourne -1 pour la position a jouer si on est au fond
+                return new Tuple<int,int,int>(Score(root), -1, -1);
+            }
+            //je crois pour test
+            int optVal = parentValue;
+            int[] optOp = null;
+            foreach (int[] op in Ops(root))
+            {
+                int[,] newNode = Apply(root, op,player==0);
+                int val = alphabeta(newNode, depth - 1, -minOrMax, optVal,player==0?1:0).Item1;
+                if (val*minOrMax>parentValue*minOrMax)
+                {
+                    optVal = val;
+                    optOp = op;
+                    if (optVal*minOrMax>parentValue*minOrMax)
+                    {
+                        break;
+                    }
+                }
+            }
+            return new Tuple<int, int, int>(optVal,optOp[0],optOp[1]);
+        }
+
+        public int Score(int[,] board)
+        {
+            return 0;
+        }
+
         public int[,] GetBoard() {
             return board;
         }
