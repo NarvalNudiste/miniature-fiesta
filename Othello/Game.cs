@@ -15,6 +15,7 @@ namespace Othello
         int[,] board;
         private int currentPlayer;
         int boardSize = 8;
+        ArrayList possibleMoves;
 
         DispatcherTimer globTimer;
 
@@ -63,7 +64,8 @@ namespace Othello
 
         private void Initialize() {
             //init 2d array
-                board = new int[boardSize,boardSize];
+            board = new int[boardSize,boardSize];
+            possibleMoves = new ArrayList();
             //fill the array with starting pos
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
@@ -76,9 +78,11 @@ namespace Othello
             currentPlayer = 1;
             timerBlack.Start();
         }
+
         private bool Out(int x, int y) {
             return (x < 0 || y < 0 || x >= boardSize || y >= boardSize) ? true : false;
         }
+
         private bool Empty(int x, int y) {
             return (board[x, y] == -1) ? true : false;
         }
@@ -90,59 +94,78 @@ namespace Othello
             }
             return s;
         }
-        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
+        private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null, int[,] game = null) {
+            if (game == null) {
+                game = this.board;
+            }
             switch (direction) {
                 case 1: {
-                        return CheckLine(x-1, y+1, -1, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y + 1, -1, 1, color, stockCurrentLocation, ary);
                     }
                 case 2: {
-                        return CheckLine(x, y+1, 0, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x, y + 1, 0, 1, color, stockCurrentLocation, ary);
                     }
                 case 3: {
-                        return CheckLine(x+1, y+1, 1, 1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y + 1, 1, 1, color, stockCurrentLocation, ary);
                     }
                 case 4: {
-                        return CheckLine(x-1, y, -1, 0, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y, -1, 0, color, stockCurrentLocation, ary);
                     }
                 case 6: {
-                        return CheckLine(x+1, y, 1, 0, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y, 1, 0, color, stockCurrentLocation, ary);
                     }
                 case 7: {
-                        return CheckLine(x-1, y-1, -1, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x - 1, y - 1, -1, -1, color, stockCurrentLocation, ary);
                     }
                 case 8: {
-                        return CheckLine(x, y-1, 0, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x, y - 1, 0, -1, color, stockCurrentLocation, ary);
                     }
                 case 9: {
-                        return CheckLine(x+1, y-1, 1, -1, color, stockCurrentLocation, ary);
+                        return CheckLine(x, y, x + 1, y - 1, 1, -1, color, stockCurrentLocation, ary);
                     }
                 default: {
                         return false;
                     }
             }
         }
-        private bool CheckLine(int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
+
+        private bool CheckLine(int startingX, int startingY, int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null, int[,] game = null) {
+            if (game == null) {
+                game = this.board;
+            }
             int foeColor = color == 0 ? 1 : 0;
             bool firstPass = false;
             while (!Out(x, y)) {
-                if (board[x,y] == -1)
+                if (game[x,y] == -1)
                     return false;
-                if (board[x,y] == color && firstPass == false) {
+                if (game[x,y] == color && firstPass == false) {
                     return false;
                 }
-                if (board[x,y] == foeColor) {
+                if (game[x,y] == foeColor) {
                     if (stockCurrentLocations) {
                         ary.Add(new Tuple<int, int>(x, y));
                     }
                     firstPass = true;
                 }
-                if (firstPass == true && board[x,y] == color) {
+                if (firstPass == true && game[x,y] == color) {
                     return true;
                 }
                 x += xInc;
                 y += yInc;
             }
             return false;
+        }
+        private ArrayList getPlayableMoves() {
+            for (int y = 0; y < this.boardSize; y++) {
+                for (int x = 0; x< this.boardSize; x++) {
+                    for (int i = 0; i < 10; i++) {
+                        if (i != 5) {
+                            CheckLine(x, y, i, this.currentPlayer, false);
+                        }
+                    }
+                }
+            }
+            return possibleMoves;
         }
         public bool isCurrentPlayerWhite()
         {
@@ -207,12 +230,34 @@ namespace Othello
                 return true;
             }
         }
+        public int[,] Apply(int column, int line, bool isWhite, int[,] game) {
+            int[,] newBoard;
+            newBoard = (int[,])game.Clone();
+            ArrayList ary = new ArrayList();
+            int c = isWhite ? 0 : 1;
+            for (int i = 0; i < 10; i++) {
+                if (i != 5) {
+                    if (CheckLine(column, line, i, c, false, null, newBoard)) {
+                        CheckLine(column, line, i, c, true, ary, newBoard);
+                    }
+                }
+            }
+            foreach (Tuple<int, int> t in ary) {
+                newBoard[t.Item1, t.Item2] = newBoard[t.Item1, t.Item2] == 1 ? 0 : 1;
+                newBoard[column, line] = c;
+                }
+                ary = null;
+                return newBoard;
+        }
+
         public Tuple<int, int> GetNextMove(int[,] game, int level, bool whiteTurn) {
             throw new NotImplementedException();
+
         }
         public int[,] GetBoard() {
             return board;
         }
+
         public bool isAnOptionAvailable(int color) {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
@@ -233,6 +278,26 @@ namespace Othello
             }
             return false;
         }
+
+        public bool Final(int color, int[,] game) {
+            if (isGameFinished(game)) {
+                return true;
+            } else {
+                for (int y = 0; y < boardSize; y++) {
+                    for (int x = 0; x < boardSize; x++) {
+                        for (int i = 0; i < 10; i++) {
+                            if (i != 5 && game[x, y] == -1) {
+                                if (CheckLine(x, y, i, color, false, null, game)) {
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+
         public bool isGameFinished() {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
@@ -243,6 +308,18 @@ namespace Othello
             }
             return true;
         }
+        
+        public bool isGameFinished(int[,] game) {
+            for (int y = 0; y < boardSize; y++) {
+                for (int x = 0; x < boardSize; x++) {
+                    if (game[x, y] == -1) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
         public int getCurrentPlayer() {
             return currentPlayer;
         }
