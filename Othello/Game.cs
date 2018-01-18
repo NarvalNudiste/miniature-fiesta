@@ -33,8 +33,6 @@ namespace Othello
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private String name = "Dan";
-
         public int this[int x,int y]
         {
             get { return board[x,y]; }
