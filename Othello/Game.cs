@@ -420,12 +420,6 @@ namespace Othello
                 for (int x = 0; x < boardSize; x++) {
                     for (int i = 0; i < 10; i++) {
                         if (i != 5 && board[x,y] == -1) {
-                            if (color == 0) {
-                              // Debug.WriteLine("WHITE : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
-                            }
-                            if (color == 1){
-                            //  Debug.WriteLine("BLACK : checking [" + x + ";" + y + "] : direction = " + i + " : " + CheckLine(x, y, i, color, false));
-                            }
                             if (CheckLine(x, y, i, color, false, null, null, null)) {
                                 return true;
                             }
