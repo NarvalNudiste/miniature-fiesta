@@ -314,26 +314,35 @@ namespace Othello
                        { 20, -3, 11, 8, 8, 11, -3, 20} };
 
             // Piece difference, frontier disks and disk squares
-	        for(i=0; i<8; i++)
-		        for(j=0; j<8; j++)  {
-			        if(board[i,j] == my_color)  {
-				        d += V[i,j];
-				        my_tiles++;
-			        } else if(board[i,j] == opp_color)  {
-				        d -= V[i,j];
-				        opp_tiles++;
-			        }
-			        if(board[i,j] != -1)   {
-				        for(k=0; k<8; k++)  {
-					        x = i + X1[k]; y = j + Y1[k];
-					        if(x >= 0 && x< 8 && y >= 0 && y< 8 && board[x,y] == -1) {
-						        if(board[i,j] == my_color)  my_front_tiles++;
-						        else opp_front_tiles++;
-						        break;
-					        }
-				        }
-			        }
-		        }
+            for (i = 0; i < 8; i++)
+            {
+                for (j = 0; j < 8; j++)
+                {
+                    if (board[i, j] == my_color)
+                    {
+                        d += V[i, j];
+                        my_tiles++;
+                    }
+                    else if (board[i, j] == opp_color)
+                    {
+                        d -= V[i, j];
+                        opp_tiles++;
+                    }
+                    if (board[i, j] != -1)
+                    {
+                        for (k = 0; k < 8; k++)
+                        {
+                            x = i + X1[k]; y = j + Y1[k];
+                            if (x >= 0 && x < 8 && y >= 0 && y < 8 && board[x, y] == -1)
+                            {
+                                if (board[i, j] == my_color) my_front_tiles++;
+                                else opp_front_tiles++;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
 	        if(my_tiles > opp_tiles)
 		        p = (100.0 * my_tiles)/(my_tiles + opp_tiles);
 	        else if(my_tiles<opp_tiles)
