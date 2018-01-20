@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <!--binding à changer car la si on diminue seulement la largeur de la fen ça pue-->
-        <Grid x:Name="PlayGrid" Margin="10,10,10,10" Grid.Column="1" Width="{Binding ActualHeight, ElementName=PlayGrid, Mode=OneWay}">
+        <Grid x:Name="PlayGrid" Margin="10,10,10,10" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>

@@ -35,6 +35,8 @@ namespace Othello {
             game = new Game();
             DataContext = game;
 
+            this.SizeChanged += changeSize;
+
             imageBlack = new Image();
             imageWhite = new Image();
             srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"testB.png";
@@ -185,6 +187,15 @@ namespace Othello {
             {
                 btn.Content = null;
             }
+        }
+
+        private void changeSize(object sender, RoutedEventArgs e)
+        {
+            double height = Structure.ActualHeight -(PlayGrid.Margin.Top + PlayGrid.Margin.Bottom);
+            double width = Structure.ColumnDefinitions[1].ActualWidth - (PlayGrid.Margin.Left + PlayGrid.Margin.Top);
+            double squareSize = Math.Min(height, width);
+            PlayGrid.Height = squareSize;
+            PlayGrid.Width = squareSize;
         }
     }
 }
