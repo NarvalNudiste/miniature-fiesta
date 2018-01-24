@@ -63,12 +63,13 @@ namespace Othello {
                     Grid.SetRow(btn, i);
                     Grid.SetColumn(bord, j);
                     Grid.SetRow(bord, i);
-                    bord.BorderThickness = new Thickness(2.0);
-                    bord.BorderBrush = Brushes.Black;
+                    bord.BorderThickness = new Thickness(0.5);
+                    bord.BorderBrush = Brushes.Gray;
                     btn.Click += grid_Item_Click;
                     btn.MouseEnter += grid_Item_Enter_Over;
                     btn.MouseLeave += grid_Item_Left_Over;
-                    if(game[j,i] == 0)
+                    btn.Style = (Style)FindResource("CustomButtonStyle");
+                    if (game[j,i] == 0)
                     {
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri(srcWhite));
