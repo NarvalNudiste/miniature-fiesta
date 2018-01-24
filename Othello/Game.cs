@@ -31,6 +31,10 @@ namespace Othello
             get { return string.Format("{0:00}:{1:00}:{2:00}", timerBlack.Elapsed.Hours, timerBlack.Elapsed.Minutes, timerBlack.Elapsed.Seconds); }
         }
 
+        public int blackScore { get { return GetBlackScore(); } }
+
+        public int whiteScore { get { return GetWhiteScore(); } }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public int this[int x,int y]
@@ -212,6 +216,8 @@ namespace Othello
                     board[column, line] = c;
                 }
                 ary = null;
+                OnPropertyChanged("blackScore");
+                OnPropertyChanged("whiteScore");
                 return true;
             }
         }

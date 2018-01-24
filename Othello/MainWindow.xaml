@@ -42,5 +42,7 @@
         <Label x:Name="TimerWhite" Content="{Binding Path=timerWhiteVal}"  Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
         <Label Content="Timer White :" HorizontalAlignment="Center" Grid.Column="0" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
         <Label Content="Timer Black :" HorizontalAlignment="Center" Grid.Column="2" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
+        <Label Content="{Binding Path=whiteScore}" HorizontalContentAlignment="Center" Grid.Column="0" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="120" Height="120" FontSize="72" FontWeight="Bold"/>
+        <Label Content="{Binding Path=blackScore}" HorizontalContentAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="120" Height="120" FontSize="72" FontWeight="Bold"/>
     </Grid>
 </Window>
