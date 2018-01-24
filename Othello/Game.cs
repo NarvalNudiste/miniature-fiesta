@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Othello
 {
-    class Game : System.ComponentModel.INotifyPropertyChanged
+    class Game : System.ComponentModel.INotifyPropertyChanged 
     {
         int[,] board;
         private int currentPlayer;
@@ -18,17 +20,17 @@ namespace Othello
         ArrayList possibleMoves;
 
         DispatcherTimer globTimer;
-
-        Stopwatch timerWhite;
-        Stopwatch timerBlack;
+        SettableStopWatch timerWhite;
+        SettableStopWatch timerBlack;
+        
 
         public String timerWhiteVal {
-            get { return string.Format("{0:00}:{1:00}:{2:00}", timerWhite.Elapsed.Hours, timerWhite.Elapsed.Minutes, timerWhite.Elapsed.Seconds); }
+            get { return string.Format("{0:00}:{1:00}:{2:00}", timerWhite.getTime().Hours, timerWhite.getTime().Minutes, timerWhite.getTime().Seconds); }
         }
 
         public String timerBlackVal
         {
-            get { return string.Format("{0:00}:{1:00}:{2:00}", timerBlack.Elapsed.Hours, timerBlack.Elapsed.Minutes, timerBlack.Elapsed.Seconds); }
+            get { return string.Format("{0:00}:{1:00}:{2:00}", timerBlack.getTime().Hours, timerBlack.getTime().Minutes, timerBlack.getTime().Seconds); }
         }
 
         public int blackScore { get { return GetBlackScore(); } }
@@ -44,8 +46,8 @@ namespace Othello
         public Game()
         {
             globTimer = new DispatcherTimer();
-            timerWhite = new Stopwatch();
-            timerBlack = new Stopwatch();
+            timerWhite = new SettableStopWatch(new TimeSpan(0, 0, 0));
+            timerBlack = new SettableStopWatch(new TimeSpan(0, 0, 0));
 
             globTimer.Interval = TimeSpan.FromSeconds(1);
             globTimer.Tick += GlobTimerTick;
@@ -265,5 +267,32 @@ namespace Othello
             Debug.WriteLine("Can white play ? " + this.isAnOptionAvailable(0));
             Debug.WriteLine("Can black play ? " + this.isAnOptionAvailable(1));
         }
+
+        public void SaveGame(String filename) {
+            State s = new State(this.board, this.currentPlayer, timerWhite.Elapsed, timerBlack.Elapsed);
+            Stream TestFileStream = File.Create(filename);
+            BinaryFormatter serializer = new BinaryFormatter();
+            serializer.Serialize(TestFileStream, s);
+            TestFileStream.Close();
+        }
+
+        public void LoadBoard(String filename) {
+            if (File.Exists(filename)) {
+                Stream TestFileStream = File.OpenRead(filename);
+                BinaryFormatter deserializer = new BinaryFormatter();
+                State s = (Othello.State)deserializer.Deserialize(TestFileStream);
+                TestFileStream.Close();
+
+                if (s != null) {
+                    this.board = s.Board;
+                    this.currentPlayer = s.CurrentPlayer;
+                    this.timerBlack = new SettableStopWatch(s.BlackTimeSpanOffset);
+                    this.timerWhite = new SettableStopWatch(s.WhiteTimeSpanOffset);
+                    this.timerBlack.Start();
+                    this.timerWhite.Start();
+                }
+            }
+        }
+
     }
 }

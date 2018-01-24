@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Runtime.Serialization.Formatters.Binary;
 
 //just in case on est groupe 12 LOL
 
@@ -83,7 +84,30 @@ namespace Othello {
                     PlayGrid.Children.Add(btn);
                 }
             }
+
         }
+
+        private void load_Btn_click(object sender, RoutedEventArgs e) {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true) {
+                // Open document 
+                string filename = dlg.FileName;
+                game.LoadBoard(filename);
+            }
+            refreshGrid();
+        }
+        private void save_Btn_click(object sender, RoutedEventArgs e) {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true) {
+                // Open document 
+                string filename = dlg.FileName;
+                game.SaveGame(filename);
+            }
+
+        }
+
 
         //https://social.msdn.microsoft.com/Forums/vstudio/en-US/dc9afbe7-784d-42cd-8065-6fd1558e8bd9/grid-child-elements-accessing-using-c-rowcolumn?forum=wpf
         Button GetGridButton(Grid g, int r, int c)
