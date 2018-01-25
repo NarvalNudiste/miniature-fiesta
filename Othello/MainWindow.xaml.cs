@@ -88,22 +88,39 @@ namespace Othello {
 
         }
 
-        private void load_Btn_click(object sender, RoutedEventArgs e) {
+        public bool load_Game()
+        {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Save file (.save) | *.save";
+            dlg.DefaultExt = "save";
+            dlg.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
             Nullable<bool> result = dlg.ShowDialog();
-            if (result == true) {
+            if (result == true)
+            {
                 // Open document 
                 string filename = dlg.FileName;
                 game.LoadBoard(filename);
+                refreshGrid();
+                return true;
             }
-            refreshGrid();
+            return false;
         }
+
+        private void load_Btn_click(object sender, RoutedEventArgs e) {
+            load_Game();
+        }
+
         private void save_Btn_click(object sender, RoutedEventArgs e) {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-            Nullable<bool> result = dlg.ShowDialog();
+            Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
+            saveFileDialog.Filter = "Save file (.save) | *.save";
+            saveFileDialog.FileName = "Save1.save";
+            saveFileDialog.DefaultExt = "save";
+            saveFileDialog.ValidateNames = true;
+            saveFileDialog.InitialDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
+            Nullable<bool> result = saveFileDialog.ShowDialog();
             if (result == true) {
                 // Open document 
-                string filename = dlg.FileName;
+                string filename = saveFileDialog.FileName;
                 game.SaveGame(filename);
             }
 
