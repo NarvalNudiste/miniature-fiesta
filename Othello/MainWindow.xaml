@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
         Title="MainWindow" Height="500" Width="900">
-    <Grid Name="Structure">
+    <Viewbox Stretch="Uniform">
+    <Grid Name="Structure" Width="900" Height="500">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -46,4 +47,5 @@
         <Button x:Name="saveBtn" Content="SaveBoard" Grid.Column="2" HorizontalAlignment="Left" Margin="53,365,0,0" VerticalAlignment="Top" Width="75" Click="save_Btn_click"/>
         <Button x:Name="loadBtn" Content="LoadBoard" Grid.Column="2" HorizontalAlignment="Left" Margin="53,390,0,0" VerticalAlignment="Top" Width="75" Click="load_Btn_click"/>
     </Grid>
+    </Viewbox>
 </Window>
