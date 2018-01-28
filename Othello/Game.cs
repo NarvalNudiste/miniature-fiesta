@@ -264,6 +264,8 @@ namespace Othello
 
         public void ResetGame() {
             Initialize();
+            OnPropertyChanged("blackScore");
+            OnPropertyChanged("whiteScore");
         }
 
         public void Evaluate() {

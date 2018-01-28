@@ -172,7 +172,6 @@ namespace Othello {
                     }
                     else if(game[j,i] == -1)
                     {
-                        //pas sur que ce soit utile
                         btn.Content = null;
                     }
                 }
@@ -194,6 +193,19 @@ namespace Othello {
                 //game.Evaluate();
                 if (game.isGameFinished()) {
                     Debug.WriteLine("Game Finished");
+                    if(game.whiteScore>game.blackScore)
+                    {
+                        MessageBox.Show("Player White win");
+                    }
+                    else if(game.whiteScore < game.blackScore)
+                    {
+                        MessageBox.Show("Player Black win");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Draw");
+                    }
+                    
                     game.ResetGame();
                     refreshGrid();
                 } else {
