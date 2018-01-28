@@ -53,6 +53,9 @@ namespace Othello {
             InitializeGrid();
         }
 
+        /// <summary>
+        /// initialize the grid which affiche the board
+        /// </summary>
         private void InitializeGrid()
         {
             int nbRow = PlayGrid.RowDefinitions.Count();
@@ -95,6 +98,10 @@ namespace Othello {
 
         }
 
+        /// <summary>
+        /// load a game
+        /// </summary>
+        /// <returns>true if the game has been load else false</returns>
         public bool load_Game()
         {
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
@@ -113,10 +120,20 @@ namespace Othello {
             return false;
         }
 
+        /// <summary>
+        /// the function call when you click on the load button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void load_Btn_click(object sender, RoutedEventArgs e) {
             load_Game();
         }
 
+        /// <summary>
+        /// the function called when you click on the button save
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void save_Btn_click(object sender, RoutedEventArgs e) {
             Microsoft.Win32.SaveFileDialog saveFileDialog = new Microsoft.Win32.SaveFileDialog();
             saveFileDialog.Filter = "Save file (.save) | *.save";
@@ -133,7 +150,13 @@ namespace Othello {
 
         }
 
-
+        /// <summary>
+        /// get the button caontained in a given position in the grid
+        /// </summary>
+        /// <param name="g">grid</param>
+        /// <param name="r">row</param>
+        /// <param name="c">column</param>
+        /// <returns>the button</returns>
         //https://social.msdn.microsoft.com/Forums/vstudio/en-US/dc9afbe7-784d-42cd-8065-6fd1558e8bd9/grid-child-elements-accessing-using-c-rowcolumn?forum=wpf
         Button GetGridButton(Grid g, int r, int c)
         {
@@ -146,6 +169,9 @@ namespace Othello {
             return null;
         }
 
+        /// <summary>
+        /// refresh the display of the grid
+        /// </summary>
         private void refreshGrid()
         {
             int nbRow = PlayGrid.RowDefinitions.Count();
@@ -178,6 +204,11 @@ namespace Othello {
             }
         }
 
+        /// <summary>
+        /// the function called when we click on a button in the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grid_Item_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -224,6 +255,11 @@ namespace Othello {
             }
         }
 
+        /// <summary>
+        /// the function called when we mouseOver a item in the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grid_Item_Enter_Over(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -242,6 +278,11 @@ namespace Othello {
             }
         }       
 
+        /// <summary>
+        /// the function called when we quit the mouseOver of an item in the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void grid_Item_Left_Over(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
@@ -253,6 +294,12 @@ namespace Othello {
             }
         }
 
+
+        /// <summary>
+        /// the function called to resize the grid to a square we we resize the window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void changeSize(object sender, RoutedEventArgs e)
         {
             double height = Structure.ActualHeight - (PlayGrid.Margin.Top + PlayGrid.Margin.Bottom);
