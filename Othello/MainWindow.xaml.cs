@@ -16,6 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 
 //just in case on est groupe 12 LOL
 
@@ -29,22 +30,24 @@ namespace Othello {
         Image imageWhite;
         String srcWhite;
         Game game;
-
+        SoundManager smanager;
 
         public MainWindow() {
             InitializeComponent();
             game = new Game();
             DataContext = game;
-
-            this.SizeChanged += changeSize;
+            smanager = new SoundManager();
 
             imageBlack = new Image();
             imageWhite = new Image();
-            srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"testB.png";
-            srcWhite = System.AppDomain.CurrentDomain.BaseDirectory + @"testW.png";
+            srcBlack = System.AppDomain.CurrentDomain.BaseDirectory + @"pawn_white_14x14.png";
+            srcWhite = System.AppDomain.CurrentDomain.BaseDirectory + @"pawn_black_14x14.png";
+
+            RenderOptions.SetBitmapScalingMode(imageBlack, BitmapScalingMode.NearestNeighbor);
+            RenderOptions.SetBitmapScalingMode(imageWhite, BitmapScalingMode.NearestNeighbor);
+
             imageBlack.Source = new BitmapImage(new Uri(srcBlack));
             imageWhite.Source = new BitmapImage(new Uri(srcWhite));
-
             InitializeGrid();
         }
 
@@ -63,8 +66,8 @@ namespace Othello {
                     Grid.SetRow(btn, i);
                     Grid.SetColumn(bord, j);
                     Grid.SetRow(bord, i);
-                    bord.BorderThickness = new Thickness(0.5);
-                    bord.BorderBrush = Brushes.Gray;
+                    bord.BorderThickness = new Thickness(0.0);
+                    bord.BorderBrush = Brushes.Black;
                     btn.Click += grid_Item_Click;
                     btn.MouseEnter += grid_Item_Enter_Over;
                     btn.MouseLeave += grid_Item_Left_Over;
@@ -73,12 +76,14 @@ namespace Othello {
                     {
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri(srcWhite));
+                        RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
                         btn.Content = img;
                     }
                     else if(game[j, i] == 1)
                     {
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri(srcBlack));
+                        RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
                         btn.Content = img;
                     }
                     PlayGrid.Children.Add(bord);
@@ -136,12 +141,14 @@ namespace Othello {
                     {
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri(srcWhite));
+                        RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
                         btn.Content = img;
                     }
                     else if (game[j, i] == 1)
                     {
                         Image img = new Image();
                         img.Source = new BitmapImage(new Uri(srcBlack));
+                        RenderOptions.SetBitmapScalingMode(img, BitmapScalingMode.NearestNeighbor);
                         btn.Content = img;
                     }
                     else if(game[j,i] == -1)
@@ -162,6 +169,7 @@ namespace Othello {
             {
                 if (game.PlayMove(x, y, game.isCurrentPlayerWhite()))
                 {
+                    smanager.Play(game.isCurrentPlayerWhite(), game.lastNumberOfPawnDowned);
                     refreshGrid();
                 }
                 //game.Evaluate();

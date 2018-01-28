@@ -18,6 +18,7 @@ namespace Othello
         private int currentPlayer;
         int boardSize = 8;
         ArrayList possibleMoves;
+        public int lastNumberOfPawnDowned = 0;
 
         DispatcherTimer globTimer;
         SettableStopWatch timerWhite;
@@ -201,6 +202,7 @@ namespace Othello
             }
         }
         public bool PlayMove(int column, int line, bool isWhite) {
+            lastNumberOfPawnDowned = 0;
             ArrayList ary = new ArrayList();
             int c = isWhite ? 0 : 1;
             for (int i = 0; i < 10; i++) {
@@ -214,6 +216,9 @@ namespace Othello
                 return false;
             } else {
                 foreach (Tuple<int, int> t in ary) {
+                    if (lastNumberOfPawnDowned < 6) {
+                        lastNumberOfPawnDowned++;
+                    }
                     board[t.Item1, t.Item2] = board[t.Item1, t.Item2] == 1 ? 0 : 1;
                     board[column, line] = c;
                 }
