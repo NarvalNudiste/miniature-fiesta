@@ -21,7 +21,9 @@ namespace Othello {
             introPlayer = new MediaPlayer();
 
             introPlayer.Open(introPath);
+            loopPlayer.Open(loopPath);
             introPlayer.MediaEnded += IntroPlayer_MediaEnded;
+            loopPlayer.MediaEnded += LoopPlayer_MediaEnded;
             introPlayer.Play();
         }
 
@@ -30,7 +32,6 @@ namespace Othello {
         private void LoopPlayer_MediaEnded(object sender, EventArgs e) {
             loopPlayer.Position = TimeSpan.Zero;
             loopPlayer.Play();
-
         }
 
         private void IntroPlayer_MediaEnded(object sender, EventArgs e) {

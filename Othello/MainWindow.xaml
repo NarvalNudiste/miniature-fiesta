@@ -44,14 +44,12 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
             </Grid>
-            <Label x:Name="TimerBlack" Content="{Binding Path=timerBlackVal}"  Grid.Column="2" HorizontalAlignment="Center" Margin="9.8,50,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
-            <Label x:Name="TimerWhite" Content="{Binding Path=timerWhiteVal}"  Grid.Column="0" HorizontalAlignment="Center" Margin="10,50,0,0" VerticalAlignment="Top" Width="119" Height="34"/>
-            <Label Content="Timer White :" HorizontalAlignment="Center" Grid.Column="0" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
-            <Label Content="Timer Black :" HorizontalAlignment="Center" Grid.Column="2" Margin="10,19,0,0" VerticalAlignment="Top" Width="119" Height="26"/>
-            <Label Content="{Binding Path=whiteScore}" HorizontalContentAlignment="Center" Grid.Column="0" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="120" Height="120" FontSize="72" FontWeight="Bold"/>
-            <Label Content="{Binding Path=blackScore}" HorizontalContentAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="120" Height="120" FontSize="72" FontWeight="Bold"/>
-            <Button x:Name="saveBtn" Content="SaveBoard" Grid.Column="2" HorizontalAlignment="Left" Margin="53,365,0,0" VerticalAlignment="Top" Width="75" Click="save_Btn_click" Style="{StaticResource CustomButtonStyle}"/>
-            <Button x:Name="loadBtn" Content="LoadBoard" Grid.Column="2" HorizontalAlignment="Left" Margin="53,390,0,0" VerticalAlignment="Top" Width="75" Click="load_Btn_click" Style="{StaticResource CustomButtonStyle}"/>
+            <Label x:Name="TimerBlack" Content="{Binding Path=timerBlackVal}"  Grid.Column="2" HorizontalAlignment="Center" Margin="25,144,36,0" VerticalAlignment="Top" Width="119" Height="34" RenderTransformOrigin="0.526,0.491" Foreground="#FFA4C505" FontFamily="Coder's Crux" FontSize="22"/>
+            <Label x:Name="TimerWhite" Content="{Binding Path=timerWhiteVal}" HorizontalAlignment="Center" Margin="79,144,522,0" VerticalAlignment="Top" Width="119" Height="34" RenderTransformOrigin="0.526,0.491" Foreground="#FFA4C505" FontFamily="Coder's Crux" FontSize="22" Grid.ColumnSpan="2"/>
+            <Label Content="{Binding Path=whiteScore}" HorizontalContentAlignment="Center" Grid.Column="0" HorizontalAlignment="Center" Margin="93,61,64,413" VerticalAlignment="Center" Width="23" Height="26" FontSize="22" FontWeight="Bold" FontFamily="Coder's Crux" Foreground="#FFA4C505"/>
+            <Label Content="{Binding Path=blackScore}" HorizontalContentAlignment="Center" Grid.Column="2" HorizontalAlignment="Center" Margin="58,61,99,413" VerticalAlignment="Center" Width="23" Height="26" FontSize="22" FontWeight="Bold" FontFamily="Coder's Crux" Foreground="#FFA4C505"/>
+            <Button x:Name="saveBtn" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="5,437,0,0" VerticalAlignment="Top" Width="125" Click="save_Btn_click" Style="{StaticResource CustomButtonStyle}" Height="35"/>
+            <Button x:Name="loadBtn" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="5,392,0,0" VerticalAlignment="Top" Width="125" Click="load_Btn_click" Style="{StaticResource CustomButtonStyle}" Height="33"/>
         </Grid>
     </Viewbox>
 </Window>
