@@ -5,6 +5,10 @@ using System.Linq;
 using System.Text;
 
 namespace Othello {
+
+    /// <summary>
+    /// a class which inherit from StopWatch but which we can set to a value
+    /// </summary>
     class SettableStopWatch : Stopwatch {
         public TimeSpan StartOffset { get; private set; }
         public SettableStopWatch(TimeSpan ts) {
