@@ -35,12 +35,18 @@ namespace Othello
 
         private void load_game(object sender, RoutedEventArgs e)
         {
-
+            MainWindow mainWindow = new MainWindow();
+            if (mainWindow.load_Game())
+            {
+                mainWindow.Show();
+                this.Hide();
+                mainWindow.Closing += new CancelEventHandler(show_menu);
+            }
         }
 
         private void exit_game(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            Environment.Exit(0);
         }
 
         private void show_menu(object sender, CancelEventArgs e)

@@ -14,7 +14,6 @@ namespace Othello {
         private MediaPlayer soundPlayer;
         Uri introPath = new Uri("sound/intro.wav", UriKind.Relative);
         Uri loopPath = new Uri("sound/loop.wav", UriKind.Relative);
-        bool introPlayed = false;
         public SoundManager() {
             loopPlayer = new MediaPlayer();
             introPlayer = new MediaPlayer();
@@ -31,7 +30,7 @@ namespace Othello {
         private void LoopPlayer_MediaEnded(object sender, EventArgs e) {
             loopPlayer.Position = TimeSpan.Zero;
             loopPlayer.Play();
-                
+
         }
 
         private void IntroPlayer_MediaEnded(object sender, EventArgs e) {

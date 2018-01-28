@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="SettableStopWatch.cs" />
+    <Compile Include="SoundManager.cs" />
+    <Compile Include="State.cs" />
     <Page Include="CustomButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -104,6 +107,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pics\board_128x128.png" />
+    <Resource Include="pics\board_all.png" />
+    <Resource Include="pics\left_border.png" />
+    <Resource Include="pics\pawn_black_14x14.png" />
+    <Resource Include="pics\pawn_white_14x14.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

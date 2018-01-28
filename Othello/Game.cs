@@ -293,8 +293,16 @@ namespace Othello
                     this.currentPlayer = s.CurrentPlayer;
                     this.timerBlack = new SettableStopWatch(s.BlackTimeSpanOffset);
                     this.timerWhite = new SettableStopWatch(s.WhiteTimeSpanOffset);
-                    this.timerBlack.Start();
-                    this.timerWhite.Start();
+                    if (currentPlayer == 1)
+                    {
+                        timerBlack.Start();
+                    }
+                    else if (currentPlayer == 0)
+                    {
+                        timerWhite.Start();
+                    }
+                    OnPropertyChanged("blackScore");
+                    OnPropertyChanged("whiteScore");
                 }
             }
         }
