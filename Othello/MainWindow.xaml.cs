@@ -18,7 +18,6 @@ using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 
-//just in case on est groupe 12 LOL
 
 namespace Othello {
     /// <summary>
