@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -114,6 +115,105 @@
     <Resource Include="pics\left_border.png" />
     <Resource Include="pics\pawn_black_14x14.png" />
     <Resource Include="pics\pawn_white_14x14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b5.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b6.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\intro.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\loop.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w0.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w5.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\w6.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\sound\b0.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b5.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b6.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\intro.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\loop.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w0.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w5.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\w6.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b0.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b1.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b3.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="sounds\b4.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
