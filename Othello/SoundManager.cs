@@ -12,7 +12,6 @@ namespace Othello {
     class SoundManager {
         private MediaPlayer introPlayer;
         private MediaPlayer loopPlayer;
-        //private MediaPlayer loopPlayer;
         private MediaPlayer soundPlayer;
         Uri introPath = new Uri("sound/intro.wav", UriKind.Relative);
         Uri loopPath = new Uri("sound/loop.wav", UriKind.Relative);

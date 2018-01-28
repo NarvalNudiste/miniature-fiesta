@@ -8,7 +8,7 @@ namespace Othello {
     [Serializable()]
 
     /// <summary>
-    /// the class used to save the game
+    /// the serializable class used to save the game
     /// </summary>
     class State {
         private int[,] board;

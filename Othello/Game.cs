@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -385,13 +384,6 @@ namespace Othello
             Initialize();
             OnPropertyChanged("blackScore");
             OnPropertyChanged("whiteScore");
-        }
-
-        public void Evaluate() {
-            String cplayer = this.getCurrentPlayer() == 0 ? "White" : "Black";
-            Debug.WriteLine("Current player : " + cplayer);
-            Debug.WriteLine("Can white play ? " + this.isAnOptionAvailable(0));
-            Debug.WriteLine("Can black play ? " + this.isAnOptionAvailable(1));
         }
 
         /// <summary>
