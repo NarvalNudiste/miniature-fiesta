@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Othello">
     <!--https://stackoverflow.com/questions/26850712/blue-mouse-over-effect-on-button-in-blend-wpf-->
-    <!--changement du style pour ne pas avoir de fond bleu au mouseOver-->
+    <!--changing the style of the buttons to not have the blue lighting when we are MousingOver-->
     <Style x:Key="CustomButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Template">

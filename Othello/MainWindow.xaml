@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Othello"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="900">
+        Title="Othello" Height="500" Width="900">
     <Viewbox Stretch="Uniform">
         <Grid Height="500" Width="900"  Name="Structure" RenderOptions.BitmapScalingMode="NearestNeighbor">
             <Grid.Background>
