@@ -16,6 +16,9 @@ namespace Othello {
         private MediaPlayer soundPlayer;
         Uri introPath = new Uri("sound/intro.wav", UriKind.Relative);
         Uri loopPath = new Uri("sound/loop.wav", UriKind.Relative);
+        /// <summary>
+        /// Ctor, loads files and play the song intro 
+        /// </summary>
         public SoundManager() {
             loopPlayer = new MediaPlayer();
             introPlayer = new MediaPlayer();
@@ -28,16 +31,28 @@ namespace Othello {
         }
 
 
-
+        /// <summary>
+        /// Callback used to play the main music part in loop
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoopPlayer_MediaEnded(object sender, EventArgs e) {
             loopPlayer.Position = TimeSpan.Zero;
             loopPlayer.Play();
         }
-
+        /// <summary>
+        /// Callback used to play the main music part after the intro
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void IntroPlayer_MediaEnded(object sender, EventArgs e) {
             loopPlayer.Play();
         }
-
+        /// <summary>
+        /// Play a sound when a pawn is placed, sounds better the more pawns were switched this turn
+        /// </summary>
+        /// <param name="isWhite"></param>
+        /// <param name="pawnNumber"></param>
         public void Play(bool isWhite, int pawnNumber) {
             soundPlayer = new MediaPlayer();
             string color = isWhite ? "w" : "b";

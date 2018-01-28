@@ -158,7 +158,16 @@ namespace Othello
             }
             return s;
         }
-
+        /// <summary>
+        /// Check in a direction according to an int to see if a move is valid
+        /// </summary>
+        /// <param name="x">The starting x coordinate</param>
+        /// <param name="y">The starting y coordinate</param>
+        /// <param name="direction">The direction to check (numpad notation)</param>
+        /// <param name="color">Current player color</param>
+        /// <param name="stockCurrentLocation">Stock possible moves in an array (bool)</param>
+        /// <param name="ary">Array used to stock possible moves</param>
+        /// <returns></returns>
         private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
             switch (direction) {
                 case 1: {
@@ -190,7 +199,20 @@ namespace Othello
                     }
             }
         }
-
+        /// <summary>
+        ///Check the validity of a move : First, we search in a line for n adjacent tiles occupied by the opponent. 
+        ///Then, we search for a tile occupied by one of our paw 
+        /// </summary>
+        /// <param name="startingX">Starting x coordinate</param>
+        /// <param name="startingY">Starting y coordinate</param>
+        /// <param name="x">Current x coordinate</param>
+        /// <param name="y">Current y coordinate</param>
+        /// <param name="xInc">Horizontal movement</param>
+        /// <param name="yInc">Vertical movement</param>
+        /// <param name="color">Current player color</param>
+        /// <param name="stockCurrentLocation">Stock possible moves in an array (bool)</param>
+        /// <param name="ary">Array used to stock possible moves</param>
+        /// <returns></returns>
         private bool CheckLine(int startingX, int startingY, int x, int y, int xInc, int yInc, int color, bool stockCurrentLocations, ArrayList ary = null) {
 
             int foeColor = color == 0 ? 1 : 0;
