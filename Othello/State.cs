@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace Othello {
     [Serializable()]
+
+    /// <summary>
+    /// the class used to save the game
+    /// </summary>
     class State {
         private int[,] board;
         private int currentPlayer;

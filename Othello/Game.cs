@@ -12,6 +12,9 @@ using System.IO;
 
 namespace Othello
 {
+    /// <summary>
+    /// this class manage the game state and all the opertions about it
+    /// </summary>
     class Game : System.ComponentModel.INotifyPropertyChanged 
     {
         int[,] board;
@@ -24,26 +27,50 @@ namespace Othello
         SettableStopWatch timerWhite;
         SettableStopWatch timerBlack;
         
-
+       /// <summary>
+       /// the property for the white's timer's binding
+       /// </summary>
         public String timerWhiteVal {
             get { return string.Format("{0:00}:{1:00}:{2:00}", timerWhite.getTime().Hours, timerWhite.getTime().Minutes, timerWhite.getTime().Seconds); }
         }
 
+        /// <summary>
+        /// the property for the black's timer's binding
+        /// </summary>
         public String timerBlackVal
         {
             get { return string.Format("{0:00}:{1:00}:{2:00}", timerBlack.getTime().Hours, timerBlack.getTime().Minutes, timerBlack.getTime().Seconds); }
         }
 
+        /// <summary>
+        /// the property for the binding of the black's score
+        /// </summary>
         public int blackScore { get { return GetBlackScore(); } }
 
+        /// <summary>
+        /// the property for the binding of the white's score
+        /// </summary>
         public int whiteScore { get { return GetWhiteScore(); } }
 
+        /// <summary>
+        /// the event to notify the change of our properties
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        /// an indexor to get the content of a tile
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>the tile value</returns>
         public int this[int x,int y]
         {
             get { return board[x,y]; }
         }
+
+        /// <summary>
+        /// a constructor which instanciate the timers and initialize the board
+        /// </summary>
         public Game()
         {
             globTimer = new DispatcherTimer();
@@ -56,17 +83,29 @@ namespace Othello
             Initialize();
         }
 
+        /// <summary>
+        /// notifie that a property has changed
+        /// </summary>
+        /// <param name="propertyName"></param>
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// a function called every DispatcherTimer's tick to notify that the timers ha ve changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void GlobTimerTick(object sender, EventArgs e)
         {
             OnPropertyChanged("timerWhiteVal");
             OnPropertyChanged("timerBlackVal");
         }
 
+        /// <summary>
+        /// initialize the board and the timers
+        /// </summary>
         private void Initialize() {
             //init 2d array
             board = new int[boardSize,boardSize];
@@ -86,13 +125,31 @@ namespace Othello
             timerBlack.Start();
         }
 
+        /// <summary>
+        /// check if a position is out of the board
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns>out of the board or not</returns>
         private bool Out(int x, int y) {
             return (x < 0 || y < 0 || x >= boardSize || y >= boardSize) ? true : false;
         }
 
+        /// <summary>
+        /// check if a given tile is empty
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns> empty or not</returns>
         private bool Empty(int x, int y) {
             return (board[x, y] == -1) ? true : false;
         }
+
+        /// <summary>
+        /// give the scor of the given player
+        /// </summary>
+        /// <param name="player"></param>
+        /// <returns> the score </returns>
         private int GetScore(int player) {
             int s = 0;
             foreach (int e in board) {
@@ -101,6 +158,7 @@ namespace Othello
             }
             return s;
         }
+
         private bool CheckLine(int x, int y, int direction, int color, bool stockCurrentLocation, ArrayList ary = null) {
             switch (direction) {
                 case 1: {
@@ -159,12 +217,18 @@ namespace Othello
             return false;
         }
 
-
+        /// <summary>
+        /// check if the current player is white or not
+        /// </summary>
+        /// <returns>white or not</returns>
         public bool isCurrentPlayerWhite()
         {
             return currentPlayer == 0;
         }
 
+        /// <summary>
+        /// change the player who's playing right now
+        /// </summary>
         public void changePlayer()
         {
             currentPlayer = currentPlayer == 1 ? 0 : 1;
@@ -179,6 +243,11 @@ namespace Othello
                 timerWhite.Start();
             }
         }
+
+        /// <summary>
+        /// get the scor of the white player
+        /// </summary>
+        /// <returns></returns>
         public int GetBlackScore() {
             return GetScore(1);
         }
@@ -186,6 +255,13 @@ namespace Othello
             return GetScore(0);
         }
 
+        /// <summary>
+        /// check if a move is playable or not
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="line"></param>
+        /// <param name="isWhite"></param>
+        /// <returns>if the move is playable or not</returns>
         public bool IsPlayable(int column, int line, bool isWhite) {
             if (Out(column, line) || !Empty(column, line))
                 return false;
@@ -201,6 +277,14 @@ namespace Othello
                 return false;
             }
         }
+
+        /// <summary>
+        /// play a move to the given location
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="line"></param>
+        /// <param name="isWhite"></param>
+        /// <returns>if the move has been played</returns>
         public bool PlayMove(int column, int line, bool isWhite) {
             lastNumberOfPawnDowned = 0;
             ArrayList ary = new ArrayList();
@@ -229,7 +313,11 @@ namespace Othello
             }
         }
         
-
+        /// <summary>
+        /// check if there is available play for a given player
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>if there's a play or not</returns>
         public bool isAnOptionAvailable(int color) {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
@@ -245,7 +333,10 @@ namespace Othello
             return false;
         }
 
-
+        /// <summary>
+        /// check if the game is finished
+        /// </summary>
+        /// <returns>game finished or not</returns>
         public bool isGameFinished() {
             for (int y = 0; y < boardSize; y++) {
                 for (int x = 0; x < boardSize; x++) {
@@ -257,11 +348,17 @@ namespace Othello
             return true;
         }
         
-
+        /// <summary>
+        /// give the current player color
+        /// </summary>
+        /// <returns></returns>
         public int getCurrentPlayer() {
             return currentPlayer;
         }
 
+        /// <summary>
+        /// reset alla the board, the timers and the scores
+        /// </summary>
         public void ResetGame() {
             Initialize();
             OnPropertyChanged("blackScore");
@@ -275,6 +372,10 @@ namespace Othello
             Debug.WriteLine("Can black play ? " + this.isAnOptionAvailable(1));
         }
 
+        /// <summary>
+        /// save the game to a given location
+        /// </summary>
+        /// <param name="filename"></param>
         public void SaveGame(String filename) {
             State s = new State(this.board, this.currentPlayer, timerWhite.Elapsed, timerBlack.Elapsed);
             Stream TestFileStream = File.Create(filename);
@@ -283,6 +384,10 @@ namespace Othello
             TestFileStream.Close();
         }
 
+        /// <summary>
+        /// load a game from a given file
+        /// </summary>
+        /// <param name="filename"></param>
         public void LoadBoard(String filename) {
             if (File.Exists(filename)) {
                 Stream TestFileStream = File.OpenRead(filename);

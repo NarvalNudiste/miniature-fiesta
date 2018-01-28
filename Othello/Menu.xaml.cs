@@ -25,6 +25,11 @@ namespace Othello
             InitializeComponent();
         }
 
+        /// <summary>
+        /// start a new game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void new_game(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -33,6 +38,11 @@ namespace Othello
             mainWindow.Closing += new CancelEventHandler(show_menu);
         }
 
+        /// <summary>
+        /// load a game
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void load_game(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
@@ -44,11 +54,21 @@ namespace Othello
             }
         }
 
+        /// <summary>
+        /// exit the application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void exit_game(object sender, RoutedEventArgs e)
         {
             Environment.Exit(0);
         }
 
+        /// <summary>
+        /// show the menu (used when we close the main window)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void show_menu(object sender, CancelEventArgs e)
         {
             this.Show();
